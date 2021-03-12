@@ -34,7 +34,7 @@ def start(update, context):
     )
 
 # Location Tracking
-LOC = range(1)
+LOC, Tracking = range(2)
 
 def start_tracking(update: Update, context: CallbackContext):
     user = update.message.from_user
@@ -43,12 +43,13 @@ def start_tracking(update: Update, context: CallbackContext):
         mensagem_endereco,
         reply_markup = ReplyKeyboardRemove(),
     )
-    return LOC
+    return ConversationHandler.END
 
 def att_tracking(update: Update, context: CallbackContext):
     user = update.message.from_user
     last_location = update.message.location
     logger.info("Ola %s Sua encomenda saiu para entrega", user.first_name)
+    return ConversationHandler.END
 
 def cancel(update: Update, context: CallbackContext):
     user = update.message.from_user
@@ -74,15 +75,12 @@ def main():
     dispatcher.add_handler(CommandHandler("start", start))
 
     # conversation handler
-     loc_handler = ConversationHandler(
+    loc_handler = ConversationHandler(
         entry_points = [CommandHandler('start_tracking', start_tracking)],
         states = {
             LOC: [
-                MessageHandler(Filters.location, location)],
-            Tracking: [
-                MessageHandler(Filters.location, location)
-            ]    
-            },
+                MessageHandler(Filters.location, att_tracking)]
+        },
         fallbacks = [CommandHandler('cancel', cancel)]
     )
     dispatcher.add_handler(loc_handler)
