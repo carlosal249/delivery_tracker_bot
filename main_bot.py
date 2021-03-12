@@ -74,9 +74,15 @@ def main():
     dispatcher.add_handler(CommandHandler("start", start))
 
     # conversation handler
-    loc_handler = ConversationHandler(
+     loc_handler = ConversationHandler(
         entry_points = [CommandHandler('start_tracking', start_tracking)],
-        states = {},
+        states = {
+            LOC: [
+                MessageHandler(Filters.location, location)],
+            Tracking: [
+                MessageHandler(Filters.location, location)
+            ]    
+            },
         fallbacks = [CommandHandler('cancel', cancel)]
     )
     dispatcher.add_handler(loc_handler)
