@@ -14,7 +14,7 @@ mensagem_endereco = print(f'Seu pedido foi aprovado, e sera entregue no endereco
 # Token provided by @ BotFather
 TOKEN = '1604610917:AAGbRPaEPIQEf_tT2UE4ODkH6v8vBlvkOE0' 
 # Your Heroku App Page 
-APP_NAME = 'https://XXXX.herokuapp.com/'
+APP_NAME = 'https://botdeliverytracker.herokuapp.com/'
 # Port
 PORT = int(os.environ.get('PORT', '8443'))
 
